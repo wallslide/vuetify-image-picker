@@ -1,5 +1,5 @@
 {
-  "name": "vue-image-picker",
+  "name": "@nagoos/vue-image-picker",
   "version": "1.0.0",
   "public": true,
   "license": "MIT",

@@ -4,6 +4,7 @@
   "public": true,
   "license": "MIT",
   "description": "Easily select and upload images with this image picker component styled using Vuetify components!",
+  "author": "Jeremy Hall <jeremy@nagoos.com>",
   "repositiory": {
     "type": "git",
     "url": "git+https://github.com/wallslide/vuetify-image-picker.git"

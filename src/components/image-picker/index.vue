@@ -6,7 +6,7 @@
         <v-icon left>clear</v-icon>
       </v-btn>
     </v-snackbar>
-    <image-input :value="value" :uid="uid" @input="checkNewImageArray">
+    <image-input :value="value" @input="checkNewImageArray">
       <div slot="activator">
         <v-layout v-if="value.length === 0">
           <v-flex xs4 md3>
@@ -76,16 +76,6 @@ export default {
     value: {
       type: Array,
       default: null
-    },
-    // for validation purposes, name of the input
-    name: {
-      type: String,
-      required: true
-    },
-    // id of user, appended to images to prevent collisions
-    uid: {
-      type: String,
-      required: true
     },
     max: {
       type: Number,

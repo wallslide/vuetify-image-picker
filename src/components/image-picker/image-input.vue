@@ -29,11 +29,6 @@ export default {
     max: {
       type: Number,
       default: null
-    },
-    // id of user, appended to images to prevent collisions
-    uid: {
-      type: String,
-      required: true
     }
   },
   data: () => ({
@@ -55,7 +50,7 @@ export default {
         imageFile,
         imageURL: URL.createObjectURL(imageFile),
         name: imageFile.name,
-        key: `${this.uid}-${new Date().getTime()}-${index}`
+        key: `${new Date().getTime()}-${index}`
       }))
 
       this.$emit('input', this.value.concat(newImages))

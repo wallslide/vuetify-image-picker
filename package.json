@@ -34,7 +34,9 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
-    "core-js": "2",
+    "core-js": "2"
+  },
+  "peerDependencies": {
     "vue": "^2.6.10",
     "vuetify": "^1.5.5"
   },

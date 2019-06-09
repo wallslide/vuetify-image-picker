@@ -1,5 +1,6 @@
 import { storiesOf } from '@storybook/vue'
 import ImagePicker from '@/components/image-picker'
+import placeholderImage from '@/assets/placeholder-img.jpg'
 import { imageUploadingStates } from '@/components/image-picker/enums'
 
 // Wrap stories in app so that they get the correct styles
@@ -16,12 +17,18 @@ storiesOf('Image Picker', module)
       components: { ImagePicker },
       data () {
         return {
+          placeholderImage,
           images: [],
           activeImageUploads: {}
         }
       },
       template:
-        '<ImagePicker uid="fake-uid" name="test" v-model="images" :activeImageUploads="activeImageUploads"/>'
+        `<ImagePicker v-model="images" :activeImageUploads="activeImageUploads">
+          <v-flex xs4 md3>
+            <img :src="placeholderImage" width="100%" height="100%">
+          </v-flex>
+        </ImagePicker>
+        `
     }
   })
   .add('Max of 3', () => {
@@ -29,12 +36,18 @@ storiesOf('Image Picker', module)
       components: { ImagePicker },
       data () {
         return {
+          placeholderImage,
           images: [],
           activeImageUploads: {}
         }
       },
       template:
-        '<ImagePicker uid="fake-uid" name="test" :max="3" v-model="images" :activeImageUploads="activeImageUploads"/>'
+        `<ImagePicker :max="3" v-model="images" :activeImageUploads="activeImageUploads">
+          <v-flex xs4 md3>
+            <img :src="placeholderImage" width="100%" height="100%">
+          </v-flex>
+        </ImagePicker>  
+        `
     }
   })
   .add('Upload starting', () => {
@@ -42,6 +55,7 @@ storiesOf('Image Picker', module)
       components: { ImagePicker },
       data () {
         return {
+          placeholderImage,
           images: [{ key: 'aaa' }],
           activeImageUploads: {
             aaa: {
@@ -52,7 +66,12 @@ storiesOf('Image Picker', module)
         }
       },
       template:
-        '<ImagePicker uid="fake-uid" name="test" v-model="images" :activeImageUploads="activeImageUploads"/>'
+      `<ImagePicker v-model="images" :activeImageUploads="activeImageUploads">
+        <v-flex xs4 md3>
+          <img :src="placeholderImage" width="100%" height="100%">
+        </v-flex>
+      </ImagePicker>  
+        `
     }
   })
   .add('Upload in progress', () => {
@@ -60,6 +79,7 @@ storiesOf('Image Picker', module)
       components: { ImagePicker },
       data () {
         return {
+          placeholderImage,
           images: [{ key: 'aaa' }],
           activeImageUploads: {
             aaa: {
@@ -70,7 +90,12 @@ storiesOf('Image Picker', module)
         }
       },
       template:
-        '<ImagePicker uid="fake-uid" name="test" v-model="images" :activeImageUploads="activeImageUploads"/>'
+      `<ImagePicker v-model="images" :activeImageUploads="activeImageUploads">
+        <v-flex xs4 md3>
+          <img :src="placeholderImage" width="100%" height="100%">
+        </v-flex>
+      </ImagePicker>  
+        `
     }
   })
   .add('Upload complete', () => {
@@ -78,6 +103,7 @@ storiesOf('Image Picker', module)
       components: { ImagePicker },
       data () {
         return {
+          placeholderImage,
           images: [{ key: 'aaa' }],
           activeImageUploads: {
             aaa: {
@@ -88,7 +114,12 @@ storiesOf('Image Picker', module)
         }
       },
       template:
-        '<ImagePicker uid="fake-uid" name="test" v-model="images" :activeImageUploads="activeImageUploads"/>'
+      `<ImagePicker v-model="images" :activeImageUploads="activeImageUploads">
+        <v-flex xs4 md3>
+          <img :src="placeholderImage" width="100%" height="100%">
+        </v-flex>
+      </ImagePicker>  
+        `
     }
   })
   .add('Upload error', () => {
@@ -96,6 +127,7 @@ storiesOf('Image Picker', module)
       components: { ImagePicker },
       data () {
         return {
+          placeholderImage,
           images: [{ key: 'aaa' }],
           activeImageUploads: {
             aaa: {
@@ -107,6 +139,11 @@ storiesOf('Image Picker', module)
         }
       },
       template:
-        '<ImagePicker uid="fake-uid" name="test" v-model="images" :activeImageUploads="activeImageUploads"/>'
+      `<ImagePicker v-model="images" :activeImageUploads="activeImageUploads">
+        <v-flex xs4 md3>
+          <img :src="placeholderImage" width="100%" height="100%">
+        </v-flex>
+      </ImagePicker>  
+        `
     }
   })

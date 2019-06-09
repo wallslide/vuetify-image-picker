@@ -9,9 +9,7 @@
     <image-input :value="value" @input="checkNewImageArray">
       <div slot="activator">
         <v-layout v-if="value.length === 0">
-          <v-flex xs4 md3>
-            <img src="@/assets/placeholder-img.jpg" width="100%" height="100%">
-          </v-flex>
+          <slot/>
         </v-layout>
         <v-layout v-else wrap>
           <v-flex v-for="avatar in value" :key="avatar.key" xs4 md3>

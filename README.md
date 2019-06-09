@@ -1,29 +1,16 @@
-# vue-image-picker
+# @nagoos/vue-image-picker
 
-## Project setup
-```
-yarn install
-```
+A VueJS component which allows users to upload their images. Users can select one or more images for upload. The component shows the progress of the uploads and indicates when they are complete.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+See [working demo](https://codesandbox.io/s/nagoosvue-image-picker-njuf1)
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+## Features
+* Select the maximum number of images allowed to be uploaded
+* Pass the image types allowed to be uploaded (default is `png` and `jpg`)
+* Pass a maximum image size
 
-### Run your tests
-```
-yarn run test
-```
+## Installation
 
-### Lints and fixes files
-```
-yarn run lint
-```
+`yarn add @nagoos/vue-image-picker`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+

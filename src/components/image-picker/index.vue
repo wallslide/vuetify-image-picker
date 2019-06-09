@@ -2,15 +2,11 @@
   <v-container grid-list-xl>
     <v-snackbar v-model="snackbar" :timeout="5000" :top="true" :color="snackColor">
       {{ snackMessage }}
-      <v-btn color="white" flat @click="snackbar = false">消す</v-btn>
+      <v-btn dark flat icon @click="snackbar = false">
+        <v-icon left>clear</v-icon>
+      </v-btn>
     </v-snackbar>
-    <image-input
-      :value="value"
-      :uid="uid"
-      :max="max"
-      @input="$emit('input', $event)"
-      @errorMessage="onErrorMessage"
-    >
+    <image-input :value="value" :uid="uid" @input="checkNewImageArray">
       <div slot="activator">
         <v-layout v-if="value.length === 0">
           <v-flex xs4 md3>
@@ -48,17 +44,19 @@
         <v-layout v-if="max !== null">
           <v-flex
             class="pt-0 pb-0 font-weight-light font-italic grey--text"
-          >{{ numSelected }}/{{ max }}枚</v-flex>
+          >{{ numSelected }}/{{ max }}&nbsp;{{maxImagesUnit}}</v-flex>
         </v-layout>
         <v-layout justify-start wrap>
           <v-flex xs12 sm6>
             <v-btn :disabled="disableAddButton" block color="success">
-              <v-icon left>add_photo_alternate</v-icon>イメージ追加
+              <v-icon left>add_photo_alternate</v-icon>
+              {{addImagesLabel}}
             </v-btn>
           </v-flex>
           <v-flex xs12 sm6>
             <v-btn block color="red" outline @click.stop="clearImages">
-              <v-icon left>clear</v-icon>クリア
+              <v-icon left>clear</v-icon>
+              {{clearImagesLabel}}
             </v-btn>
           </v-flex>
         </v-layout>
@@ -71,11 +69,6 @@
 import ImageInput from './image-input'
 import { imageUploadingStates } from './enums'
 export default {
-  $_veeValidate: {
-    name () {
-      return this.name
-    }
-  },
   components: {
     ImageInput
   },
@@ -98,9 +91,45 @@ export default {
       type: Number,
       default: null
     },
+    maxSize: {
+      type: Number,
+      default: 8192 * 1024 // 8192 KB
+    },
     activeImageUploads: {
       type: Object,
       default: () => ({})
+    },
+    exceedMaxImagesError: {
+      type: String,
+      default: 'The maximum number of images was exceeded by your selection.'
+    },
+    invalidFileTypeError: {
+      type: String,
+      default: "Invalid file type. Please upload 'png' or 'jpg' files."
+    },
+    fileSizeError: {
+      type: String,
+      default: 'One or more of the files you attempted to upload is larger than the single-file size limit.'
+    },
+    maxImagesUnit: {
+      type: String,
+      default: 'images'
+    },
+    clearedImagesMessage: {
+      type: String,
+      default: 'Cleared images'
+    },
+    clearImagesLabel: {
+      type: String,
+      default: 'clear'
+    },
+    addImagesLabel: {
+      type: String,
+      default: 'add images'
+    },
+    validImageTypes: {
+      type: Array,
+      default: () => ['png', 'jpg', 'jpeg']
     }
   },
   data () {
@@ -108,7 +137,8 @@ export default {
       snackbar: false,
       snackMessage: '',
       snackColor: 'info',
-      imageUploadingStates
+      imageUploadingStates,
+      errors: []
     }
   },
   computed: {
@@ -117,6 +147,16 @@ export default {
     },
     numSelected () {
       return this.value ? this.value.length : 0
+    },
+    currentError () {
+      return this.errors.length > 0 ? this.errors[0] : null
+    }
+  },
+  watch: {
+    currentError (currentError) {
+      if (currentError) {
+        this.onErrorMessage(currentError)
+      }
     }
   },
   methods: {
@@ -124,7 +164,7 @@ export default {
       this.$emit('input', [])
       // this.$emit('clearImageUploads')
       // Also clear error messages
-      this.snackMessage = 'イメージをクリアしました'
+      this.snackMessage = this.clearedImagesMessage
       this.snackColor = 'info'
       this.snackbar = true
     },
@@ -133,6 +173,37 @@ export default {
       this.snackMessage = errorMessage
       this.snackColor = 'error'
       this.snackbar = true
+    },
+    checkNewImageArray (images) {
+      this.errors = this.checkForErrors(images)
+      if (this.errors.length === 0) {
+        this.$emit('input', images)
+      }
+    },
+    checkForErrors (images) {
+      const totalFiles = images.length
+      const matchString = `image/${this.validImageTypes.join('|')}`
+      const errors = images.reduce(
+        (errors, { imageFile }, index) => {
+          if (this.max && totalFiles > this.max) {
+            // check whether max number of images will be exceeded
+            errors.add(this.exceedMaxImagesError)
+          }
+          if (!imageFile.type.match(matchString)) {
+            // check whether the upload is an image
+            errors.add(this.invalidFileTypeError)
+          }
+          if (imageFile.size > this.maxSize) {
+            // check whether the size is greater than the size limit
+            errors.add(this.fileSizeError)
+          }
+
+          return errors
+        },
+        new Set()
+      )
+
+      return Array.from(errors)
     }
   }
 }

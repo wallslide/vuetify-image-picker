@@ -53,4 +53,40 @@ The following props are available to customize `vue-image-picker`:
 
 ## Images model
 
+The `vue-image-picker`'s model is an array of Objects which represents an array of images selected by the user. 
+
+Each object contains the following properties
+### imageFile
+A native `File` object created by the browser when the user selects a file
+
+### imageURL
+A data url which can be assigned to an `<img>`'s `src` to show the selected file
+
+### key 
+A key representing a unique image name
+
+### name
+The name of the image file selected by the user
+
 ## Active Image Uploads
+
+An Object containing the active upload state of images selected by the user. For each image that the system wishes to indicate the upload state of, there should be a key-value pair added to the Object:
+
+### key
+The `key` should equal the key of the image entry in the `images[]` array that the system wishes to indicate an upload state for.
+
+### value
+The `value` is an Object with two properties:
+
+```javascript
+{
+  progress,
+  state
+}
+```
+
+The `progress`'s value should be a Number between 0 and 100 to indicate the percentage progress of the image upload.
+
+The `state`'s value should be one of the `imageUploadingStates` enums: `NEW`, `UPLOADING`, `ERROR`, or `COMPLETE`.
+
+

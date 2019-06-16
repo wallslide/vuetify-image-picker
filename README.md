@@ -13,7 +13,26 @@ See [working demo](https://codesandbox.io/s/nagoosvue-image-picker-njuf1)
 
 `yarn add @nagoos/vue-image-picker`
 
-## API
+## Usage
+
+When using ES imports, import the `ImagePicker` component and `imageUploadingStates` enum and use them in your component 
+
+```javascript
+import { ImagePicker, imageUploadingStates } from "@nagoos/vue-image-picker"
+```
+
+The v-model is an [image array](#images-model) that holds the images the user has selected. The [activeImageUploads](#active-image-uploads) property allows the `ImagePicker` component to communicate the upload status of the images the user has selected.
+
+```html
+<ImagePicker v-model="images" :activeImageUploads="activeImageUploads">
+  <v-flex xs4 md3>
+    <img :src="placeholderImage" width="100%" height="100%">
+  </v-flex>
+</ImagePicker>  
+        
+```
+
+## Component API
 
 The following props are available to customize `vue-image-picker`:
 
@@ -22,6 +41,7 @@ The following props are available to customize `vue-image-picker`:
 |`max`|Int|Limit the number of images that can be uploaded.  `null` for unlimited|`null`|
 |`maxSize`|Int|Limit the maximum size of any one image in bytes.|`8192 * 1024` (8192 KB)|
 |`validImageTypes`|[String]|The image mime types which the user is allowed to upload|`['png', 'jpg', 'jpeg']`|
+|`v-model`|[Object]|The images selected by the user. See [Images model section](#images-model) for details|`[]`|
 |`activeImageUploads`|Object|Communcates the upload progress and state of images managed by the component. See [Active Image Uploads section](#active-image-uploads)|`{}`|
 |`exceedMaxImagesError`|String| A message to show the user when they try to upload more images than allowed by the `max` prop|'`The maximum number of images was exceeded by your selection.`'|
 |`invalidFileTypeError`|String| A message to show the user when they attempt to upload an image with an invalid file type|'`Invalid file type. Please upload 'png' or 'jpg' files.`'|
@@ -31,5 +51,6 @@ The following props are available to customize `vue-image-picker`:
 |`clearImagesLabel`|String|The label for the `clear` button. Forced uppercase|'`clear`'|
 |`addImagesLabel`|String|The label for the `add images` button. Forced uppercase|'`add images`'|
 
+## Images model
 
 ## Active Image Uploads

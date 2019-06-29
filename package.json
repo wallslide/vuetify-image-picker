@@ -1,6 +1,6 @@
 {
   "name": "@nagoos/vue-image-picker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "public": true,
   "license": "MIT",
   "description": "Easily select and upload images with this image picker component styled using Vuetify components!",
